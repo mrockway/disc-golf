@@ -9,14 +9,38 @@
 	<link type="text/css" rel="stylesheet" href="main.css">
 </head>
 <body>
-	<h1 class="text-center">fore</h1>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<h1 class="text-center">fore</h1>
+			</div> {{!-- end title class --}}
+		</div>  {{!-- end title row class --}}
+		<div class="row">
+			<div class="coursesDiv col-md-6">
+				<script id="course-template" type="text/x-handlebars-template">
+					\{{#each courses}}
+					<h3>Handlebars testing</h3>
+					<p>Course Name: \{{course_name}}</p>
+				\{{/each}}
+				</script>
+			</div>  {{!-- end of courses div --}}
+			<div class="eventsDiv col-md-6">
+				<script id="events-template" type="text/x-handlebars-template">
+					\{{#each events}}
+					<h3>Handlebars testing</h3>
+					<p>Course Name: \{{tournament_name}}</p>
+				\{{/each}}
+				</script>
+			</div> {{!-- end of events div --}}
+		</div> {{!-- end of main row --}}
+	</div>  {{!-- end container --}}
 
-	<script id="course-template" type="text/x-handlebars-template">
-	<h3>Handlebars testing</h3>
-		<p>Course Name: \{{course_name}}</p>
-	</script>
+
+
 	<!-- jquery -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- handlebars js -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
 	<!-- custom js -->
 	<script type="text/javascript" src="main.js"></script>
 </body>
