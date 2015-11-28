@@ -13,14 +13,32 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
-				<h1 class="text-center">Large image and headline here</h1>
+				<h1 class="text-center">fore</h1>
 				<form class="searchCourse">
 					<input type="text" name="postal_code" placeholder="Zip Code" autofocus>
 					<input type="submit">
 				</form>
-			</div>
-		</div> {{!-- end of row div --}}
-	</div> {{!-- end container div --}}
+			</div> {{!-- end title class --}}
+		</div>  {{!-- end title row class --}}
+		<div class="row">
+			<div class="coursesDiv col-md-6">
+				<script id="course-template" type="text/x-handlebars-template">
+					\{{#each courses}}
+					<p>Course Name: \{{course_name}}</p>
+				\{{/each}}
+				</script>
+			</div>  {{!-- end of courses div --}}
+			<div class="eventsDiv col-md-6">
+				<script id="events-template" type="text/x-handlebars-template">
+					\{{#each events}}
+					<p>Course Name: \{{tournament_name}}</p>
+				\{{/each}}
+				</script>
+			</div> {{!-- end of events div --}}
+		</div> {{!-- end of main row --}}
+	</div>  {{!-- end container --}}
+
+
 
 	<!-- jquery -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

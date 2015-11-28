@@ -4,14 +4,24 @@ var express = require('express'),
 	mongoose = require('mongoose'),
 	bodyParser = require('body-parser'),
 	request = require('request'),
+	cookieParser = require('cookie-parser'),
+	session = require('express-session'),
+	passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy,
+	//oauth = require('./oauth.js'),
 	dotenv = require('dotenv').load(),
 	app = express();
+
+//Require models
+var User = require('./models/user');
 
 // set express view engine
 app.set('view engine', 'hbs');
 
 //enable body-parser to gather data
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({
+	extended: true
+}));
 
 //  set up mongoDB
 mongoose.connect('mongodb://localhost/disc_golf_app');
@@ -19,17 +29,73 @@ mongoose.connect('mongodb://localhost/disc_golf_app');
 // set express to look in public folder for css and js
 app.use(express.static(__dirname + '/public'));
 
+// use partials
+hbs.registerPartials(__dirname + '/views/partials');
+
+// tell express to use passport
+app.use(cookieParser());
+
+// tell express to use session
+app.use(session({
+	secret: 'disc_golf_key',
+	resave: false,
+	saveUninitialized: false
+}));
+
+// tell express to save user sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
+// setup authenticate for user login
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // GET route for homepage
-app.get('/', function( req,res) {
+app.get('/', function(req, res) {
 	res.render('index');
 });
 
+// GET route for signup
+app.get('/signup', function(req, res) {
+	res.render('signup');
+});
+
+// POST route for signup
+app.post('/signup', function(req, res) {
+	User.register(new User({
+			username: req.body.username
+		}), req.body.password,
+		function(err, newUser) {
+			passport.authenticate('local')(req, res, function() {
+				res.send('signed up');
+			});
+		}
+	);
+});
+
+// GET route for login
+app.get('/login', function(req, res) {
+	res.render('login');
+});
+
+// GET route for profile
+app.get('/profile', function(req, res) {
+	res.render('profile');
+});
+
+var zipCode;
 //  GET route for courses
-app.get('/courses', function(req, res) {
+app.post('/courses', function(req, res) {
+	zipCode = req.body.postal_code;
+});
+
+app.get('/profile', function(req, res) {
 	var newUrl = {
-		url:'https://api.pdga.com/services/json/course?postal_code=95677',
+		url: 'https://api.pdga.com/services/json/course?' + zipCode,
+		type: "GET",
 		headers: {
-			'Cookie':process.env.pdgaCookie
+			'Cookie': process.env.pdgaCookie
 		}
 	};
 	request(newUrl).pipe(res);
@@ -38,9 +104,9 @@ app.get('/courses', function(req, res) {
 //  GET route for events
 app.get('/events', function(req, res) {
 	var newUrl = {
-		url:'https://api.pdga.com/services/json/event?start_date=12/01/2015&end_date=02/01/2016',
+		url: 'https://api.pdga.com/services/json/event?start_date=12/01/2015&end_date=02/01/2016',
 		headers: {
-			'Cookie':process.env.pdgaCookie
+			'Cookie': process.env.pdgaCookie
 		}
 	};
 	request(newUrl).pipe(res);

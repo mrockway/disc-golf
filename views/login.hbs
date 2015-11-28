@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+	<!-- Bootstrap CSS -->
+	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- custom css -->
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	{{>header}}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<form action="" type="POST" class="login">
+					<input type="text" class="username" placeholder="username">
+					<input type="password" class="password" placeholder="password">
+					<input type="submit" class="submit">
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- jquery -->
+	  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	  {{!-- custom js --}}
+	  <script type="text/javascript" src="main.js"></script>
+</body>
+</html>
