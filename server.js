@@ -12,8 +12,6 @@ var express = require('express'),
 	dotenv = require('dotenv').load(),
 	app = express();
 
-// var to save user location
-//var zipCode;
 
 //Require models
 var User = require('./models/user');
@@ -62,34 +60,22 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
-// GET route for profile
-app.get('/profile/:zipCode', function(req, res) {
-	console.log('redirect');
-	res.render('profile');
-	console.log('after redirect');
-});
-
 //  GET route for courses
-app.get('/courses', function(req, res) {
+app.get('/profile', function(req, res) {
 	var zipCode = req.query.postal_code;
-	console.log('get from form',zipCode);
-	res.redirect('/profile/'+ zipCode);
-});
-
-app.get('/courseSearch/:zipCode', function(req, res) {
-	zipCode = req.params.zipCode;
-	console.log('zipcode in get', zipCode);
-	var newUrl = {
-		url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
-		type: "GET",
-		headers: {
-			'Cookie': process.env.pdgaCookie
-		}
-
-
-	};
-	request(newUrl).pipe(res);
-	//res.redirect('/profile');
+	//test for get within get
+	app.get('/courses', function(req, res) {
+		var newUrl = {
+			url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
+			type: "GET",
+			headers: {
+				'Cookie': process.env.pdgaCookie
+			}
+		};
+		request(newUrl).pipe(res);
+	});
+	// end test 
+	res.render('profile');
 });
 
 //  GET route for events

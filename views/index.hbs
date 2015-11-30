@@ -16,8 +16,8 @@
 			<div class="jumbotron text-center">
 			  <h2 class="headline largeText">Fore</h2>
 			  <p class="headline smallText">Find a course or event near you</p>
-			  <form class="searchCourse" method="POST" action="/courses">
-					<input type="text" name="postal_code" placeholder="Zip Code" autofocus>
+			  <form class="searchCourse" method="GET" action="/profile">
+					<input id="postal_code" type="text" name="postal_code" placeholder="Zip Code" autofocus>
 					<input class="btn" type="submit">
 				</form>
 			</div> {{!-- end jumbotron class --}}

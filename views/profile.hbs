@@ -27,12 +27,12 @@
 						<p class="CourseName">Course Name: \{{course_name}}</p>
 						<p class="courseLocation">Address: \{{street}} \{{city}} \{{state_province}}, \{{postal_code}}</p>
 						<button class="moreInfo">Course Details</button>
-						<div class="courseDetailsDiv">
+						<div class="courseDetailsDiv_\{{course_id}}">
 							<p class="courseDescription">Description: \{{course_description}}</p>
 							<p class="courseFees">Fees: \{{fees}}</p>
 							<p class="courseHoles">Holes: \{{holes}}</p>
 							<p class="coursePrivate">Private: \{{private}}</p>
-							<p class="externalLink1Url">Course Website: \{{external_link_1_url}}</p>
+							<p class="externalLink1Url"><a href="\{{external_link_1_url}}">Course Website</a></p>
 						</div>
 					</div>
 					\{{/each}}
@@ -51,11 +51,11 @@
 
 
 
-	<!-- jquery -->
+
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	<!-- handlebars js -->
+
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
-	<!-- custom js -->
+
 	<script type="text/javascript" src="profile.js"></script>
 </body>
 </html>
