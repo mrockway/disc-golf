@@ -3,17 +3,19 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Sign Up</title>
-	<!-- Bootstrap CSS -->
+	<!-- bootstrap css -->
 	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
+	<!-- font -->
+	<link href='https://fonts.googleapis.com/css?family=Arya' rel='stylesheet' type='text/css'>
 	<!-- custom css -->
-	<link rel="stylesheet" href="main.css">
+	<link type="text/css" rel="stylesheet" href="main.css">
 </head>
 <body>
 	{{>header}}
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12">
+			<h1>Sign Up</h1>
 				<form action="/signup" method="POST" class="signup">
 					<input type="text" name="username" class="username" placeholder="username">
 					<input type="password" name="password" class="password" placeholder="password">

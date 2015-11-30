@@ -1,3 +1,30 @@
 body {
-	background-color: #ffffff
+	background-color: #C4C5C0;
+	font-family: 'Arya', sans-serif;
+}
+
+.jumbotron {
+	background-color: #C4C5C0;
+	background-image: url('background2.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+	border: 2px solid #000000;
+}
+
+.headline {
+	color: #FFFFFF;
+	border-color: #000000;
+}
+
+.largeText {
+	font-size: 70px;
+}
+
+.smallText {
+	font-size: 25px;
+}
+
+.mainList {
+	border: 2px inset #000000;
+	margin: 5px;
 }

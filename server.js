@@ -12,6 +12,9 @@ var express = require('express'),
 	dotenv = require('dotenv').load(),
 	app = express();
 
+// var to save user location
+var zipCode;
+
 //Require models
 var User = require('./models/user');
 
@@ -56,43 +59,22 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
-// GET route for signup
-app.get('/signup', function(req, res) {
-	res.render('signup');
-});
-
-// POST route for signup
-app.post('/signup', function(req, res) {
-	User.register(new User({
-			username: req.body.username
-		}), req.body.password,
-		function(err, newUser) {
-			passport.authenticate('local')(req, res, function() {
-				res.send('signed up');
-			});
-		}
-	);
-});
-
-// GET route for login
-app.get('/login', function(req, res) {
-	res.render('login');
-});
-
 // GET route for profile
 app.get('/profile', function(req, res) {
 	res.render('profile');
 });
 
-var zipCode;
 //  GET route for courses
 app.post('/courses', function(req, res) {
 	zipCode = req.body.postal_code;
+	console.log(zipCode);
+	res.redirect('/profile');
 });
 
-app.get('/profile', function(req, res) {
+app.get('/courses', function(req, res) {
+	console.log('zipcode in get', zipCode);
 	var newUrl = {
-		url: 'https://api.pdga.com/services/json/course?' + zipCode,
+		url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
 		type: "GET",
 		headers: {
 			'Cookie': process.env.pdgaCookie
@@ -110,6 +92,40 @@ app.get('/events', function(req, res) {
 		}
 	};
 	request(newUrl).pipe(res);
+});
+
+// GET route for login
+app.get('/login', function(req, res) {
+	res.render('login');
+});
+
+// Authenticate user
+app.post('/login', passport.authenticate('local'), function(req,res){
+	res.redirect('/profile');
+});
+
+// GET route for signup
+app.get('/signup', function(req, res) {
+	res.render('signup');
+});
+
+// POST route for signup
+app.post('/signup', function(req, res) {
+	User.register(new User({
+			username: req.body.username
+		}), req.body.password,
+		function(err, newUser) {
+			passport.authenticate('local')(req, res, function() {
+				res.redirect('/profile');
+			});
+		}
+	);
+});
+
+//GET route to logout
+app.get('/logout', function(req,res) {
+	req.logout();
+	res.redirect('/');
 });
 
 //  server location
