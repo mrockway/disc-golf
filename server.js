@@ -13,7 +13,7 @@ var express = require('express'),
 	app = express();
 
 // var to save user location
-var zipCode;
+//var zipCode;
 
 //Require models
 var User = require('./models/user');
@@ -27,7 +27,10 @@ app.use(bodyParser.urlencoded({
 }));
 
 //  set up mongoDB
-mongoose.connect('mongodb://localhost/disc_golf_app');
+mongoose.connect(
+	process.env.MONGOLAB_URI ||
+	process.env.MONGOHQ_URL ||
+	'mongodb://localhost/disc_golf_app');
 
 // set express to look in public folder for css and js
 app.use(express.static(__dirname + '/public'));
@@ -60,18 +63,21 @@ app.get('/', function(req, res) {
 });
 
 // GET route for profile
-app.get('/profile', function(req, res) {
+app.get('/profile/:zipCode', function(req, res) {
+	console.log('redirect');
 	res.render('profile');
+	console.log('after redirect');
 });
 
 //  GET route for courses
-app.post('/courses', function(req, res) {
-	zipCode = req.body.postal_code;
-	console.log(zipCode);
-	res.redirect('/profile');
+app.get('/courses', function(req, res) {
+	var zipCode = req.query.postal_code;
+	console.log('get from form',zipCode);
+	res.redirect('/profile/'+ zipCode);
 });
 
-app.get('/courses', function(req, res) {
+app.get('/courseSearch/:zipCode', function(req, res) {
+	zipCode = req.params.zipCode;
 	console.log('zipcode in get', zipCode);
 	var newUrl = {
 		url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
@@ -79,8 +85,11 @@ app.get('/courses', function(req, res) {
 		headers: {
 			'Cookie': process.env.pdgaCookie
 		}
+
+
 	};
 	request(newUrl).pipe(res);
+	//res.redirect('/profile');
 });
 
 //  GET route for events
