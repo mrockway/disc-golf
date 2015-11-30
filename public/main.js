@@ -25,17 +25,17 @@ $(function() {
 	// }
 	
 	//submit search form data
-	$('.searchCourse').submit(function(event) {
-		//event.preventDefault();
-		zipCode = $(this).serialize();
-		console.log('search course',zipCode);
-		$.ajax({
-			type: 'POST',
-			url: '/courses',
-			data: zipCode
-		});
-	});
+	// $('.searchCourse').submit(function(event) {
+	// 	event.preventDefault();
+	// 	zipCode = $('#postal_code').val();
+	// 	console.log('search course',zipCode);
+	// 	$.ajax({
+	// 		type: 'GET',
+	// 		url: '/courses/' + zipCode
+	// 	});
+	// });
 
+	
 	//GET route for event data
 	// function getEvents(dates) {
 	// 	$.get('/events', function (data) {

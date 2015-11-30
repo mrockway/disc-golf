@@ -3,8 +3,6 @@ $(function() {
 
 	var courseData;
 	var eventData;
-	var zipCode;
-
 	var courseSource = $('#course-template').html();
 	var courseTemplate = Handlebars.compile(courseSource);
 	var courseHTML = courseTemplate({courses: courseData});
@@ -12,8 +10,7 @@ $(function() {
 	var eventsTemplate = Handlebars.compile(eventSource);
 	var eventHTML = eventsTemplate({events: eventData});
 
-
-
+	// GET route for local courses
 	$.get('/courses', function(data) {
 			courseData = data.courses;
 			console.log(courseData);
@@ -22,7 +19,7 @@ $(function() {
 		});
 
 
-
+	//GET route for local events
 	$.get('/events', function (data) {
 			console.log(data.events);
 			eventData = data.events;
@@ -30,5 +27,10 @@ $(function() {
 			$('.eventsDiv').append(eventHTML);
 		});	
 
+	//show course details
+	$('.coursesDiv').on('click', '.moreInfo', function(event){
+		console.log('button clicked');
+		$('.courseDetailsDiv').toggle();
+	});
 
 });

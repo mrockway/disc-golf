@@ -2,10 +2,16 @@ body {
 	background-color: #C4C5C0;
 	font-family: 'Arya', sans-serif;
 }
-
+.menuBar {
+	background-color: #399740;
+}
+.menuBar a {
+	color: #000000;
+	font-size: 15px;
+}
 .jumbotron {
 	background-color: #C4C5C0;
-	background-image: url('background2.png');
+	background-image: url('jumbotronbackground.png');
 	background-repeat: no-repeat;
 	background-size: cover;
 	border: 2px solid #000000;
