@@ -60,23 +60,31 @@ app.get('/', function(req, res) {
 	res.render('index');
 });
 
-//  GET route for courses
-app.get('/profile', function(req, res) {
-	var zipCode = req.query.postal_code;
-	//test for get within get
-	app.get('/courses', function(req, res) {
+//GET route for profile
+app.get('/profile', function(req,res) {
+	res.render('profile');
+});
+
+// GET route for courses
+app.get('/courses/', function(req, res) {
+	console.log(req.query.zip);
+	var zipCode = req.query.zip;
+	
+	console.log('form zipCode',zipCode);
 		var newUrl = {
 			url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
 			type: "GET",
 			headers: {
 				'Cookie': process.env.pdgaCookie
-			}
+			},
 		};
-		request(newUrl).pipe(res);
-	});
-	// end test 
-	res.render('profile');
+		request(newUrl, function(err, courseRes, courseBody){
+			var courseList = JSON.parse(courseBody);
+			console.log(courseRes.body);
+			res.json(courseList);
+		});
 });
+
 
 //  GET route for events
 app.get('/events', function(req, res) {
