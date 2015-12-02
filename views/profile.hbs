@@ -14,20 +14,16 @@
 	{{>header}}
 	<div class="container">
 		<div class="row">
-			<div class="col-md-12">
-				<h1 class="text-center">fore</h1>
-			</div> {{!-- end title class --}}
-		</div>  {{!-- end title row class --}}
-		<div class="row">
-			<div class="coursesDiv col-md-6">
-				<h2>Local Courses</h2>
+			<div class="coursesDiv">
 				<script id="course-template" type="text/x-handlebars-template">
+				<h1 class="text-center">Courses & Events near \{{courses.[0].city}}, \{{courses.[0].state_province}}</h1>
+				<div class="col-md-6">
 					\{{#each courses}}
-					<div class="mainList course_\{{course_id}}">
+					<div class="courseList course_\{{course_id}}" data-id="course_\{{course_id}}">
 						<p class="CourseName">Course Name: \{{course_name}}</p>
 						<p class="courseLocation">Address: \{{street}} \{{city}} \{{state_province}}, \{{postal_code}}</p>
 						<button class="moreInfo">Course Details</button>
-						<div class="courseDetailsDiv_\{{course_id}}">
+						<div class="courseDetailsDiv" id="course_\{{course_id}}">
 							<p class="courseDescription">Description: \{{course_description}}</p>
 							<p class="courseFees">Fees: \{{fees}}</p>
 							<p class="courseHoles">Holes: \{{holes}}</p>
@@ -36,14 +32,19 @@
 						</div>
 					</div>
 					\{{/each}}
+				</div>	
 				</script>
 			</div>  {{!-- end of courses div --}}
 			<div class="eventsDiv col-md-6">
-				<h2>Local Events</h2>
 				<script id="events-template" type="text/x-handlebars-template">
 					\{{#each events}}
-					<p>Course Name: \{{tournament_name}}</p>
-				\{{/each}}
+					<div class="eventsList">
+						<p>Tournament Name: \{{tournament_name}}</p>
+						<p>Location: \{{city}}, \{{state_prov}}</p>
+						<p>Start Date: \{{start_date}}</p>
+						<p>End Date: \{{end_date}}</p>
+					</div>
+					\{{/each}}
 				</script>
 			</div> {{!-- end of events div --}}
 		</div> {{!-- end of main row --}}

@@ -8,7 +8,7 @@ var express = require('express'),
 	session = require('express-session'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
-	//oauth = require('./oauth.js'),
+	// oauth = require('./oauth.js'),
 	dotenv = require('dotenv').load(),
 	app = express();
 
@@ -61,72 +61,87 @@ app.get('/', function(req, res) {
 });
 
 //GET route for profile
-app.get('/profile', function(req,res) {
-	res.render('profile');
+app.get('/profile', function(req, res) {
+	if (req.user) {
+		res.render('profile', {user : req.user});
+	} else {	
+		res.render('profile');
+	}
 });
 
 // GET route for courses
-app.get('/courses/', function(req, res) {
-	console.log(req.query.zip);
+app.get('/courses', function(req, res) {
 	var zipCode = req.query.zip;
-	
-	console.log('form zipCode',zipCode);
-		var newUrl = {
-			url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
-			type: "GET",
-			headers: {
-				'Cookie': process.env.pdgaCookie
-			},
-		};
-		request(newUrl, function(err, courseRes, courseBody){
-			var courseList = JSON.parse(courseBody);
-			console.log(courseRes.body);
-			res.json(courseList);
-		});
+	var newUrl = {
+		url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
+		type: "GET",
+		headers: {
+			'Cookie': process.env.pdgaCookie
+		},
+	};
+	request(newUrl, function(err, courseRes, courseBody) {
+		var courseList = JSON.parse(courseBody);
+		res.json(courseList);
+	});
 });
 
 
 //  GET route for events
 app.get('/events', function(req, res) {
 	var newUrl = {
-		url: 'https://api.pdga.com/services/json/event?start_date=12/01/2015&end_date=02/01/2016',
+		url: 'https://api.pdga.com/services/json/event?state=' + req.query.state,
 		headers: {
 			'Cookie': process.env.pdgaCookie
 		}
 	};
-	request(newUrl).pipe(res);
+	request(newUrl, function(err, eventRes, eventBody) {
+		var eventList = JSON.parse(eventBody);
+		res.json(eventList);
+	});
 });
 
 // GET route for login
 app.get('/login', function(req, res) {
-	res.render('login');
+	if (req.user) {
+		res.redirect('/profile');
+	} else {
+		res.render('login');
+	}
 });
 
 // Authenticate user
-app.post('/login', passport.authenticate('local'), function(req,res){
-	res.redirect('/profile');
+app.post('/login', passport.authenticate('local'), function(req, res) {
+	res.redirect('/');
 });
 
 // GET route for signup
 app.get('/signup', function(req, res) {
-	res.render('signup');
+	if (req.user) {
+		res.redirect('/');
+	} else {
+		res.render('signup');
+	}
 });
 
 // POST route for signup
 app.post('/signup', function(req, res) {
-	User.register(new User({
+	if (req.user) {
+		res.redirect('/');
+	} else {
+		User.register(new User({
 			username: req.body.username
 		}), req.body.password,
 		function(err, newUser) {
 			passport.authenticate('local')(req, res, function() {
-				res.redirect('/profile');
+				res.redirect('/');
 			});
 		}
-	);
+		);
+	}
 });
 
 //GET route to logout
-app.get('/logout', function(req,res) {
+app.get('/logout', function(req, res) {
 	req.logout();
 	res.redirect('/');
 });
