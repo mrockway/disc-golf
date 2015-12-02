@@ -50,22 +50,26 @@ $(function() {
 	// 	}
 	// }
 	// generateCalender();
+ 
 
 	function saveZipCode() {
 		var zipCode = localStorage.getItem('zipCode');
-		console.log('zipCode',typeof zipCode);
-		if (zipCode !== 'undefined') {
-			var checkZipCode = ((window.location.search.substring(1))).split('=')[1];
-			if(zipCode !== checkZipCode) {
+		console.log('zipCode from storage',zipCode);
+		if (zipCode.match(/\d/)) {
+			var checkZipCode = window.location.search.substring(1);
+			checkZipCode = checkZipCode.split('=')[1];
+			console.log('checkzipcode',checkZipCode);
+			if(checkZipCode) {
 				var zipCodeUrl = (window.location.search.substring(1));
 				zipCode = zipCodeUrl.split("=")[1];
 				localStorage.setItem('zipCode', zipCode);
 				console.log('zipCodeUrl', zipCodeUrl);
+				return;
 			} else {
 				zipCode = localStorage.getItem('zipCode');
 				console.log('localStorage',zipCode);
-				return zipCode;
-				
+				localStorage.setItem('zipCode', zipCode);
+				return;
 			}	
 		} else {
 				var newZipCodeUrl = (window.location.search.substring(1));
@@ -76,13 +80,12 @@ $(function() {
 	}		
 
 	saveZipCode();
-
+	console.log('savedzipcodelocalstorage',(localStorage.getItem('zipCode')));
 	// GET route for local courses
 	$.get('/courses', {
 		zip: localStorage.getItem('zipCode')
 	}, function(data) {
 		courseData = data.courses;
-		console.log('coursedata', courseData);
 		courseHTML = courseTemplate({
 			courses: courseData
 		});
@@ -95,10 +98,8 @@ $(function() {
 	//GET route for local events
 	function getEvents(state) {
 		var eventQuery = state;
-		console.log('eventq',eventQuery);
 		$.get('/events', {state: eventQuery}, function(data) {
 			eventData = data.events;
-			console.log('eventsdata', data.events);
 			eventHTML = eventsTemplate({
 				events: eventData
 			});
@@ -109,7 +110,6 @@ $(function() {
 	//show course details
 	$('.coursesDiv').on('click', '.moreInfo', function(event) {
 		var courseId = $(this).closest('.courseList').attr('data-id');
-		console.log(courseId);
 		$("#"+courseId).toggle();
 	});
 });
