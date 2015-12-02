@@ -23,11 +23,11 @@
 				<h2>Local Courses</h2>
 				<script id="course-template" type="text/x-handlebars-template">
 					\{{#each courses}}
-					<div class="mainList course_\{{course_id}}">
+					<div class="mainList course_\{{course_id}}" data-id="course_\{{course_id}}">
 						<p class="CourseName">Course Name: \{{course_name}}</p>
 						<p class="courseLocation">Address: \{{street}} \{{city}} \{{state_province}}, \{{postal_code}}</p>
 						<button class="moreInfo">Course Details</button>
-						<div class="courseDetailsDiv_\{{course_id}}">
+						<div class="courseDetailsDiv" id="course_\{{course_id}}">
 							<p class="courseDescription">Description: \{{course_description}}</p>
 							<p class="courseFees">Fees: \{{fees}}</p>
 							<p class="courseHoles">Holes: \{{holes}}</p>
@@ -39,6 +39,56 @@
 				</script>
 			</div>  {{!-- end of courses div --}}
 			<div class="eventsDiv col-md-6">
+		<form class="datePicker">
+			<p>Start Date</p>
+			<label for="month">Month:</label>
+			<select id="startMonth">
+				<option id="01">January</option>
+				<option id="02">February</option>
+				<option id="03">March</option>
+				<option id="04">April</option>
+				<option id="05">May</option>
+				<option id="06">June</option>
+				<option id="07">July</option>
+				<option id="08">August</option>
+				<option id="09">September</option>
+				<option id="10">October</option>
+				<option id="11">November</option>
+				<option id="12">December</option>
+			</select>
+			<label for="startDay">Day:</label>
+			<select id="startDay">
+				
+			</select>
+			<label for="startYear">Year:</label>
+			<select id="startYear">
+
+			</select>
+			<p>End Date</p>
+			<label for="month">Month:</label>
+			<select id="endMonth">
+				<option id="01" value="01">January</option>
+				<option id="02" value="02">February</option>
+				<option id="03" value="03">March</option>
+				<option id="04" value="04">April</option>
+				<option id="05" value="05">May</option>
+				<option id="06" value="06">June</option>
+				<option id="07" value="07">July</option>
+				<option id="08" value="08">August</option>
+				<option id="09" value="09">September</option>
+				<option id="10" value="10">October</option>
+				<option id="11" value="11">November</option>
+				<option id="12" value="12">December</option>
+			</select>
+			<label for="endDay">Day:</label>
+			<select id="endDay">
+				
+			</select>
+			<label for="endYear">Year:</label>
+			<select id="endYear">
+
+			</select>
+		</form>	
 				<h2>Local Events</h2>
 				<script id="events-template" type="text/x-handlebars-template">
 					\{{#each events}}

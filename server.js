@@ -66,11 +66,8 @@ app.get('/profile', function(req,res) {
 });
 
 // GET route for courses
-app.get('/courses/', function(req, res) {
-	console.log(req.query.zip);
+app.get('/courses', function(req, res) {
 	var zipCode = req.query.zip;
-	
-	console.log('form zipCode',zipCode);
 		var newUrl = {
 			url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
 			type: "GET",
@@ -80,7 +77,6 @@ app.get('/courses/', function(req, res) {
 		};
 		request(newUrl, function(err, courseRes, courseBody){
 			var courseList = JSON.parse(courseBody);
-			console.log(courseRes.body);
 			res.json(courseList);
 		});
 });
@@ -88,13 +84,19 @@ app.get('/courses/', function(req, res) {
 
 //  GET route for events
 app.get('/events', function(req, res) {
+	var startDate = (req.query.startDate);
+	var endDate = (req.query.finishDate);
 	var newUrl = {
-		url: 'https://api.pdga.com/services/json/event?start_date=12/01/2015&end_date=02/01/2016',
+		url: 'https://api.pdga.com/services/json/event?start_date='+startDate+'&end_date='+endDate,
 		headers: {
 			'Cookie': process.env.pdgaCookie
 		}
 	};
-	request(newUrl).pipe(res);
+	request(newUrl, function(err, eventRes, eventBody) {
+		var eventList = JSON.parse(eventBody);
+		console.log(eventList);
+		res.json(eventList);
+	});
 });
 
 // GET route for login
