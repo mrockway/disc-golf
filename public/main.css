@@ -11,10 +11,12 @@ body {
 }
 .menuBar {
 	background-color: #399740;
+	height: 30px;
 }
 .menuBar a {
 	color: #000000;
 	font-size: 15px;
+	padding: 10px;
 }
 .splashPage {
 	background-color: #C4C5C0;
@@ -40,9 +42,13 @@ body {
 	-moz-text-stroke: 1px #000000;
 	-webkit-text-stroke: 1px #000000;
 }
-.mainList {
+.courseList {
 	border: 2px inset #000000;
 	margin: 5px;
+}
+.eventsList {
+	border: 2px inset #000000;
+	margin: 5px;	
 }
 footer {
 
