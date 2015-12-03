@@ -13,6 +13,7 @@ $(function() {
 	var year = new Date();
 	year = year.getFullYear();
 
+	// Save zipCode to local storage to be used on page
 	function saveZipCode() {
 		var zipCode = localStorage.getItem('zipCode');
 		if (zipCode.match(/\d/)) {
@@ -42,6 +43,8 @@ $(function() {
 		zip: localStorage.getItem('zipCode')
 	}, function(data) {
 		courseData = data.courses;
+		
+		// Check to see if zipCode comes back with results
 		if (!courseData) {
 			alert('Please enter a valid zipCode');
 			window.location.replace('/');
@@ -50,18 +53,26 @@ $(function() {
 			courses: courseData
 			});
 		}
+
+		// Append course results to the page
 		$('.coursesDiv').append(courseHTML);
 		$('.courseDetailsDiv').hide();
+		
+		// Save Course state to pass as parameter in events search on page load
 		var courseState = ('courseState',courseData[0].state_province);
-		getEvents(courseState);
+		var stateName = ('stateName', courseData[0].state_province_name);
+		getEvents(courseState, stateName);
 	});
 
 	//GET route for local events
-	function getEvents(state) {
-		var eventQuery = state;
+	function getEvents(stateAbb, stateName ) {
+		var eventQuery = stateAbb;
+		var eventStateName = stateName;
+		console.log(eventStateName);
 		$.get('/events', {state: eventQuery}, function(data) {
 			eventData = data.events;
 			formatDates(eventData);
+			eventData[0].state_province_name = eventStateName;
 			console.log(eventData[0].start_date);
 			eventHTML = eventsTemplate({
 				events: eventData
@@ -77,6 +88,8 @@ $(function() {
 		$("#"+courseId).toggle();
 	});
 
+
+	// Convert event dates from API to a more readable format
 	function formatDates(arr) {
 		for (i = 0; i < arr.length; i++) {
 			var formatedStartDate = (arr[i].start_date).split("-");

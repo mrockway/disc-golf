@@ -1,13 +1,13 @@
 <nav class="menuBar">
-	<div class="menuBar container">
-		<a href="/">Home</a>
+	<div class="menuBar font-effect-outline text-center container">
+		<a class="pull-left" href="/">Home</a>
 		{{#if user}}
-		<a>Welcome {{user.username}}</a>
-		<a href="/logout">Logout</a>
+		<p class="text-center">Welcome {{user.username}}</p>
+		<a class="pull-right" href="/logout">Logout</a>
 		<a href="/profile">Profile</a>
 		{{else}}
-		<a href="/signup">Sign Up</a>
-		<a href="/login">Login</a>
+		<a class="pull-left" href="/signup">Sign Up</a>
+		<a class="pull-left" href="/login">Login</a>
 		{{/if}}
 	</div>
 </nav>

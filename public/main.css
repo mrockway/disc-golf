@@ -2,7 +2,7 @@ html {
 	height: 100%;
 }
 body {
-	background-color: #E8C085;
+	background-image: url('greyzz.png');	
 	border-collapse: collapse;
 	font-family: 'Boogaloo', cursive;
 	height: 100%;
@@ -12,16 +12,23 @@ body {
 	padding-bottom: 50px;
 }
 .menuBar {
-	background-color: #399740;
-	height: 30px;
+	background-image: url('greenbackground.png');
+	height: 40px;
 }
 .menuBar a {
-	color: #000000;
-	font-size: 15px;
-	padding: 10px;
+	color: #FFFFFF;
+	display: inline-block;
+	font-size: 20px;
+	padding-right: 5px;
+}
+.menuBar p {
+	color: #FFFFFF;
+	display: inline-block;
+	font-size: 20px;
+	padding-right: 5px;
 }
 .splashPage {
-	background-color: #E8C085;
+	background-image: url('greyzz.png');
 	background-image: url('jumbotronbackground.png');
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -68,9 +75,9 @@ body {
 	-webkit-text-stroke: 1px #000000;
 }
 .footer {
-	background-color: #399740;
+	background-image: url('greenbackground.png');
 	bottom: 0;
-	color: #000000;
+	color: #FFFFFF;
 	font-size: 15px;
 	height: 50px;
 	position: fixed;
@@ -78,7 +85,7 @@ body {
 	width: 100%;
 }
 .footer a {
-	color: #000000;
+	color: #FFFFFF;
 }
 label {
 	display: inherit;
