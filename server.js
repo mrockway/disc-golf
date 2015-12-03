@@ -8,6 +8,7 @@ var express = require('express'),
 	session = require('express-session'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
+	flash = require('express-flash'),
 	// oauth = require('./oauth.js'),
 	dotenv = require('dotenv').load(),
 	app = express();
@@ -15,6 +16,7 @@ var express = require('express'),
 
 //Require models
 var User = require('./models/user');
+var Course = require('./models/course');
 
 // set express view engine
 app.set('view engine', 'hbs');
@@ -55,17 +57,24 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// send flash messages for errors
+app.use(flash());
+
+//get year for copyright footer
+var currentYear = new Date();
+currentYear = currentYear.getFullYear();
+
 // GET route for homepage
 app.get('/', function(req, res) {
-	res.render('index');
+	res.render('index', {user : req.user , currentYear: currentYear});
 });
 
 //GET route for profile
 app.get('/profile', function(req, res) {
 	if (req.user) {
-		res.render('profile', {user : req.user});
+		res.render('profile', {user : req.user , currentYear: currentYear});
 	} else {	
-		res.render('profile');
+		res.render('profile', {user : req.user , currentYear: currentYear});
 	}
 });
 
@@ -105,7 +114,7 @@ app.get('/login', function(req, res) {
 	if (req.user) {
 		res.redirect('/profile');
 	} else {
-		res.render('login');
+		res.render('login', {user : req.user , currentYear: currentYear});
 	}
 });
 
@@ -119,7 +128,10 @@ app.get('/signup', function(req, res) {
 	if (req.user) {
 		res.redirect('/');
 	} else {
-		res.render('signup');
+		res.render('signup', { user : req.user, 
+													 currentYear: currentYear,
+													 errorMessage: req.flash('signupError') 
+													});
 	}
 });
 
@@ -128,13 +140,16 @@ app.post('/signup', function(req, res) {
 	if (req.user) {
 		res.redirect('/');
 	} else {
-		User.register(new User({
-			username: req.body.username
-		}), req.body.password,
+		User.register(new User({ username: req.body.username}), req.body.password,
 		function(err, newUser) {
-			passport.authenticate('local')(req, res, function() {
-				res.redirect('/');
-			});
+			if (err) {
+				req.flash('signupError', err.message);
+				res.redirect('/signup');
+			} else {	
+				passport.authenticate('local')(req, res, function() {
+					res.redirect('/');
+				});
+			}
 		}
 		);
 	}

@@ -12,21 +12,26 @@
 </head>
 <body>
 	{{>header}}
-	<div class="container">
+	<div class="container content">
 		<div class="row">
 			<div class="col-md-12">
 			<h1>Login</h1>
-				<form action="/login" method="POST" class="login">
-					<input type="text" name="username" class="username" placeholder="username" autofocus>
-					<input type="password" name="password" class="password" placeholder="password">
-					<input type="submit" class="submit">
+				<form id="loginForm" action="/login" method="POST" class="login input-group">
+					<input type="text" name="username" class="username form-control" placeholder="username" autofocus required minlength="6">
+					<input type="password" name="password" class="password form-control" placeholder="password" required minlength="6">
+					<input type="submit" class="submit form-control" value="Login">
 				</form>
 			</div>
 		</div>
 	</div>
+	{{>footer}}
 	<!-- jquery -->
 	  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	  {{!-- custom js --}}
+	  <!-- jquery validate -->
+	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+	  <!-- custom js -->
 	  <script type="text/javascript" src="main.js"></script>
+	  <!-- custom validation js -->
+		<script type="text/javascript" src="validations.js"></script>
 </body>
 </html>

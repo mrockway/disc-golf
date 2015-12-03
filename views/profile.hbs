@@ -12,15 +12,15 @@
 </head>
 <body>
 	{{>header}}
-	<div class="container">
+	<div class="container content">
 		<div class="row">
 			<div class="coursesDiv">
 				<script id="course-template" type="text/x-handlebars-template">
-				<h1 class="text-center">Courses & Events near \{{courses.[0].city}}, \{{courses.[0].state_province}}</h1>
 				<div class="col-md-6">
+					<h1 class="courseTitle text-center">Courses near \{{courses.[0].city}}, \{{courses.[0].state_province}}</h1>
 					\{{#each courses}}
 					<div class="courseList course_\{{course_id}}" data-id="course_\{{course_id}}">
-						<p class="CourseName">Course Name: \{{course_name}}</p>
+						<p class="courseName">Course Name: \{{course_name}}</p>
 						<p class="courseLocation">Address: \{{street}} \{{city}} \{{state_province}}, \{{postal_code}}</p>
 						<button class="moreInfo">Course Details</button>
 						<div class="courseDetailsDiv" id="course_\{{course_id}}">
@@ -31,25 +31,29 @@
 							<p class="externalLink1Url"><a href="\{{external_link_1_url}}">Course Website</a></p>
 						</div>
 					</div>
+					<hr>
 					\{{/each}}
 				</div>	
 				</script>
 			</div>  {{!-- end of courses div --}}
 			<div class="eventsDiv col-md-6">
-				<script id="events-template" type="text/x-handlebars-template">
+					<script id="events-template" type="text/x-handlebars-template">
+					<div class="eventsHeadline">
+						<h1 class="eventsTitle">Events in \{{events.[0].state_prov}}</h1>
+					</div>
 					\{{#each events}}
 					<div class="eventsList">
-						<p>Tournament Name: \{{tournament_name}}</p>
-						<p>Location: \{{city}}, \{{state_prov}}</p>
-						<p>Start Date: \{{start_date}}</p>
-						<p>End Date: \{{end_date}}</p>
+						<p class="tournament_name">Tournament Name: <a href="http://www.pdga.com/tour/event/\{{tournament_id}}"> \{{tournament_name}}</a></p>
+						<p class="eventLocation">Location: \{{city}}, \{{state_prov}}</p>
+						<p class="startDate">Event runs from: \{{start_date}} to \{{end_date}}</p>
 					</div>
+					<hr>
 					\{{/each}}
 				</script>
 			</div> {{!-- end of events div --}}
 		</div> {{!-- end of main row --}}
 	</div>  {{!-- end container --}}
-
+	{{>footer}}
 
 
 

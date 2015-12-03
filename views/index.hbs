@@ -12,22 +12,24 @@
 	</head>
 	<body class="index">
 		{{>header}}
-		<div class="container">
-			<div class="splashPage text-center">
+			<div class="splashPage text-center content">
 			  <h2 class="headline largeText">Fore</h2>
 			  <p class="headline smallText">Find a course or event near you</p>
-			  <form class="searchCourse" method="GET" action="/profile">
-					<input id="postal_code" type="text" name="postal_code" placeholder="Zip Code" autofocus>
-					<input class="btn" type="submit">
+			  <form id="searchZipForm" class="searchCourse input-group" method="GET" action="/profile">
+					<input id="postal_code" class="form-control" type="text" name="postal_code" placeholder="Zip Code" required minlength="5" maxlength="5" digits autofocus>
+					<input class="btn form-control" type="submit">
 				</form>
-			</div> {{!-- end jumbotron class --}}
-		</div> {{!-- end container div --}}
-		<footer>PGDA LINK</footer>	
+			</div> {{!-- end splashPage class --}}
+			{{>footer}}
 		<!-- jquery -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<!-- jquery validate -->
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
 		<!-- handlebars js -->
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
 		<!-- custom js -->
 		<script type="text/javascript" src="main.js"></script>
+		<!-- custom validation js -->
+		<script type="text/javascript" src="validations.js"></script>
 	</body>
 </html>
