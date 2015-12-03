@@ -2,9 +2,8 @@ html {
 	height: 100%;
 }
 body {
-	background-color: #709b72;
+	background-color: #709B72;
 	background-image: url('greyzz.png');	
-	/*border-collapse: collapse;*/
 	font-family: 'Boogaloo', cursive;
 	height: 100%;
 	width: 100%;
@@ -29,7 +28,7 @@ body {
 	padding-right: 5px;
 }
 .splashPage {
-	background-image: url('greyzz.png');
+	background-color: ##EFD8B5;
 	background-image: url('jumbotronbackground.png');
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -46,10 +45,21 @@ body {
 .smallText {
 	font-size: 40px;
 }
+.login_signin_background {
+	background-image: url('basket_woods.png');
+	background-position: right;
+	background-repeat: no-repeat;
+	background-size: cover;
+	border: 2px solid #000000;
+}
 .halfWidth {
 	display: inline-block;
+	font-size: 20px;
 	text-align: center;
 	width: 50%;
+}
+iframe {
+	margin-top: 10px;
 }
 .courseList {
 	margin: 5px;
@@ -81,6 +91,7 @@ body {
 	color: #FFFFFF;
 	font-size: 15px;
 	height: 50px;
+	padding-left: 0;
 	position: fixed;
 	text-align: center;
 	width: 100%;

@@ -43,7 +43,7 @@ $(function() {
 		zip: localStorage.getItem('zipCode')
 	}, function(data) {
 		courseData = data.courses;
-		
+		console.log(courseData);
 		// Check to see if zipCode comes back with results
 		if (!courseData) {
 			alert('Please enter a valid zipCode');

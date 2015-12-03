@@ -16,8 +16,10 @@
 		<div class="row">
 			<div class="coursesDiv">
 				<script id="course-template" type="text/x-handlebars-template">
-				<div class="col-md-6">
+				<div class="col-md-7">
+					{{>map}}
 					<h1 class="courseTitle text-center">Courses near \{{courses.[0].city}}, \{{courses.[0].state_province}}</h1>
+					<hr>
 					\{{#each courses}}
 					<div class="courseList course_\{{course_id}}" data-id="course_\{{course_id}}">
 						<p class="courseName">Course Name: \{{course_name}}</p>
@@ -36,7 +38,7 @@
 				</div>	
 				</script>
 			</div>  {{!-- end of courses div --}}
-			<div class="eventsDiv col-md-6">
+			<div class="eventsDiv col-md-5">
 					<script id="events-template" type="text/x-handlebars-template">
 					<div class="eventsHeadline">
 						<h1 class="eventsTitle">Events in \{{events.[0].state_province_name}}</h1>
