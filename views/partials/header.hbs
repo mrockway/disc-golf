@@ -1,13 +1,23 @@
 <nav class="menuBar">
-		<div class="menuBar container">
-			<a href="/">Home</a>
-			{{#if user}}
-			<a>Welcome {{user.username}}</a>
-			<a href="/logout">Logout</a>
-			<a href="/profile">Profile</a>
-			{{else}}
-			<a href="/signup">Sign Up</a>
-			<a href="/login">Login</a>
-			{{/if}}
-		</div>
-	</nav>
+	<div class="menuBar container">
+		<a href="/">Home</a>
+		{{#if user}}
+		<a>Welcome {{user.username}}</a>
+		<a href="/logout">Logout</a>
+		<a href="/profile">Profile</a>
+		{{else}}
+		<a href="/signup">Sign Up</a>
+		<a href="/login">Login</a>
+		{{/if}}
+	</div>
+</nav>
+{{#if errorMessage}}
+<div class="errorMessage">
+	<div class="container">{{errorMessage}}</div>
+</div>
+{{/if}}
+{{#if message}}
+<div class="errorMessage">
+	<div class="container">fjsdkjfsklsd{{message}}</div>
+</div>
+{{/if}}
