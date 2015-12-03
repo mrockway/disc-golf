@@ -4,13 +4,12 @@ html {
 body {
 	background-color: #E8C085;
 	border-collapse: collapse;
-	display: table;
-	font-family: 'Arya', sans-serif;
+	font-family: 'Boogaloo', cursive;
 	height: 100%;
 	width: 100%;
 }
 .content {
-	padding-bottom: 10px;
+	padding-bottom: 50px;
 }
 .menuBar {
 	background-color: #399740;
@@ -27,14 +26,10 @@ body {
 	background-repeat: no-repeat;
 	background-size: cover;
 	border: 2px solid #000000;
-	height: 70%;
-	width: auto;
 }
 .headline {
 	color: #FFFFFF;
 	border-color: #000000;
-	-moz-text-stroke: 1px #000000;
-	-webkit-text-stroke: 1px #000000;
 }
 .largeText {
 	font-size: 100px;
@@ -42,6 +37,11 @@ body {
 }
 .smallText {
 	font-size: 40px;
+}
+.halfWidth {
+	display: inline-block;
+	text-align: center;
+	width: 50%;
 }
 .courseList {
 	margin: 5px;
@@ -69,12 +69,12 @@ body {
 }
 .footer {
 	background-color: #399740;
+	bottom: 0;
 	color: #000000;
-	display: table-row;
 	font-size: 15px;
-	height: 1px;
+	height: 50px;
+	position: fixed;
 	text-align: center;
-	vertical-align: bottom;
 	width: 100%;
 }
 .footer a {

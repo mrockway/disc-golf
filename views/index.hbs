@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="UTF-8">
+		<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
 		<title>DiscGolf</title>
 		<!-- bootstrap css -->
 		<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<!-- font -->
-		<link href='https://fonts.googleapis.com/css?family=Arya' rel='stylesheet' type='text/css'>
+		<link href='https://fonts.googleapis.com/css?family=Boogaloo&effect=outline' rel='stylesheet' type='text/css'>
 		<!-- custom css -->
 		<link type="text/css" rel="stylesheet" href="main.css">
 	</head>
 	<body class="index">
 		{{>header}}
-			<div class="splashPage text-center content">
-			  <h2 class="headline largeText">Fore</h2>
-			  <p class="headline smallText">Find a course or event near you</p>
-			  <form id="searchZipForm" class="searchCourse input-group" method="GET" action="/profile">
-					<input id="postal_code" class="form-control" type="text" name="postal_code" placeholder="Zip Code" required minlength="5" maxlength="5" digits autofocus>
-					<input class="btn form-control" type="submit">
+			<div class="splashPage text-center content container-fluid">
+			  <h1 class="headline largeText font-effect-outline">Fore</h1>
+			  <p class="headline smallText font-effect-outline">Find a course or event near you</p>
+			  <form id="searchZipForm" class="searchCourse form-group" method="GET" action="/profile">
+					<input id="postal_code" class="halfWidth form-control" type="text" name="postal_code" placeholder="Zip Code" required minlength="5" maxlength="5" digits autofocus>
+					<input class="halfWidth btn form-control" type="submit">
 				</form>
 			</div> {{!-- end splashPage class --}}
-			{{>footer}}
+		{{>footer}}
 		<!-- jquery -->
 		<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
 		<!-- jquery validate -->

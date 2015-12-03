@@ -52,13 +52,15 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+// send flash messages for errors
+app.use(flash());
+
 // setup authenticate for user login
 passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// send flash messages for errors
-app.use(flash());
 
 //get year for copyright footer
 var currentYear = new Date();
@@ -111,27 +113,27 @@ app.get('/events', function(req, res) {
 
 // GET route for login
 app.get('/login', function(req, res) {
-	if (req.user) {
-		res.redirect('/profile');
-	} else {
-		res.render('login', {user : req.user , currentYear: currentYear});
-	}
+		if (req.user) {
+			res.redirect('/');
+		} else {
+			res.render('login', { user : req.user, currentYear: currentYear, errorMessage: req.flash('error')});	
+		}
 });
 
 // Authenticate user
-app.post('/login', passport.authenticate('local'), function(req, res) {
-	res.redirect('/');
-});
+app.post('/login', passport.authenticate('local', {
+	successRedirect: '/',
+	failureRedirect: '/login',
+	failureFlash: true
+	})
+);
 
 // GET route for signup
 app.get('/signup', function(req, res) {
 	if (req.user) {
 		res.redirect('/');
 	} else {
-		res.render('signup', { user : req.user, 
-													 currentYear: currentYear,
-													 errorMessage: req.flash('signupError') 
-													});
+		res.render('signup', { user : req.user, currentYear: currentYear, errorMessage: req.flash('signupError')});
 	}
 });
 
