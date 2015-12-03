@@ -8,4 +8,26 @@ var request = require('request'),
 					done();
 				});
 			});
+
+			it('show login page on GET /login route', function(done){
+				request('http://localhost:3000/login', function(err,res,body) {
+					expect(res.statusCode).to.equal(200);
+					done();
+				});
+			});
+
+			it('show profile page on GET /profile route', function(done){
+				request('http://localhost:3000/profile', function(err,res,body) {
+					expect(res.statusCode).to.equal(200);
+					done();
+				});
+			});
+
+			it('show index page on GET / route', function(done){
+				request('http://localhost:3000', function(err,res,body) {
+					expect(res.statusCode).to.equal(200);
+					done();
+				});
+			});
+
 		});

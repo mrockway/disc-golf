@@ -9,48 +9,7 @@ $(function() {
 	var eventSource = $('#events-template').html();
 	var eventsTemplate = Handlebars.compile(eventSource);
 	var eventHTML = eventsTemplate({ events: eventData });
-	//var defaultEventState = [];
 
-	// populate events column on page load
-	//getCurrentDate();
-	//getEvents(defaultEventDate);
-
-	// get current date and 3 months from today
-	// function getCurrentDate() {
-	// 	var today = new Date();
-	// 	var day = ('0' + (today.getDate())).slice(-2);
-	// 	var month = ('0' + ((today.getMonth()) + 1)).slice(-2);
-	// 	var year = (today.getFullYear());
-	// 	var futureMonth;
-	// 	var futureYear = year;
-	// 	if (month > 9) {
-	// 		futureMonth = ('0' + (((today.getMonth()) - 8))).slice(-2);
-	// 		futureYear = (today.getFullYear() + 1);
-	// 	} else {
-	// 		futureMonth = ('0' + ((today.getMonth()) + 1)).slice(-2);
-	// 	}
-	// 	today = month + '/' + day + '/' + year;
-	// 	future = futureMonth + '/' + day + '/' + futureYear;
-	// 	defaultEventDate.push(today, future);
-	// 	console.log('defaultEventDate', defaultEventDate);
-	// }
-
-
-	// Generate Calender
-	// function generateCalender() {
-	// 	var currentYear = (new Date()).getFullYear();
-	// 	console.log('currentYear', currentYear);
-	// 	for (i = currentYear; i < (currentYear + 5); i++) {
-	// 		$('#startYear').append('<option value=' + i + '>' + i + '</option>');
-	// 		$('#endYear').append('<option value=' + i + '>' + i + '</option>');
-	// 	}
-	// 	for (i = 1; i < 32; i++) {
-	// 		$('#startDay').append('<option value=' + i + '>' + i + '</option>');
-	// 		$('#endDay').append('<option value=' + i + '>' + i + '</option>');
-	// 	}
-	// }
-	// generateCalender();
- 	
 	var year = new Date();
 	year = year.getFullYear();
 
@@ -83,9 +42,14 @@ $(function() {
 		zip: localStorage.getItem('zipCode')
 	}, function(data) {
 		courseData = data.courses;
-		courseHTML = courseTemplate({
+		if (!courseData) {
+			alert('Please enter a valid zipCode');
+			window.location.replace('/');
+		} else {	
+			courseHTML = courseTemplate({
 			courses: courseData
-		});
+			});
+		}
 		$('.coursesDiv').append(courseHTML);
 		$('.courseDetailsDiv').hide();
 		var courseState = ('courseState',courseData[0].state_province);
