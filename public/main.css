@@ -2,8 +2,9 @@ html {
 	height: 100%;
 }
 body {
+	background-color: #709b72;
 	background-image: url('greyzz.png');	
-	border-collapse: collapse;
+	/*border-collapse: collapse;*/
 	font-family: 'Boogaloo', cursive;
 	height: 100%;
 	width: 100%;
