@@ -14,24 +14,26 @@
 	{{>header}}
 	<div class="container-fluid login_signin_background content">
 		<div class="row">
-			<div class="text-center  col-md-12">
+			<div class="text-center col-md-6 col-md-offset-3">
 			<h1 class="font-effect-outline">Create an account</h1>
 				<form id="signUpForm" action="/signup" method="POST" class="signup text-center form-group">
-					<input type="text" name="username" class="username form-control halfWidth" placeholder="username" autofocus required minlength="6">
-					<input type="password" name="password" class="password form-control halfWidth" placeholder="password" required minlength="6">
-					<input type="submit" class="submit halfWidth form-control" value="Sign Up">
+					<input type="text" name="username" class="username form-control" placeholder="username" autofocus required minlength="6">
+					<input type="password" name="password" class="password form-control" placeholder="password" required minlength="6">
+					<input type="submit" class="submit form-control" value="Sign Up">
 				</form>
 			</div>
 		</div>
 	</div>
 	{{>footer}}
 	<!-- jquery -->
-	  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-	  <!-- jquery validate -->
-	  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
-	  <!-- custom js -->
-	  <script type="text/javascript" src="main.js"></script>
-	  <!-- custom validation js -->
-		<script type="text/javascript" src="validations.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- jquery validate -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+	<!-- handlebars js -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+	<!-- custom js -->
+	<script type="text/javascript" src="main.js"></script>
+	<!-- custom validation js -->
+	<script type="text/javascript" src="validations.js"></script>
 </body>
 </html>

@@ -54,6 +54,9 @@ $(function() {
 			});
 		}
 
+		// draw map based on course results
+		createMap(courseData);
+
 		// Append course results to the page
 		$('.coursesDiv').append(courseHTML);
 		$('.courseDetailsDiv').hide();
@@ -78,6 +81,7 @@ $(function() {
 				events: eventData
 			});
 			$('.eventsDiv').append(eventHTML);
+			$('.eventsList').hide();
 			console.log(eventData);
 		});
 	}
@@ -86,6 +90,12 @@ $(function() {
 	$('.coursesDiv').on('click', '.moreInfo', function(event) {
 		var courseId = $(this).closest('.courseList').attr('data-id');
 		$("#"+courseId).toggle();
+	});
+
+	//show events
+	$('.eventsDiv').on('click', '.showEventsButton', function(event) {
+		console.log('button clicked');
+		$('.eventsList').toggle();
 	});
 
 
@@ -101,5 +111,59 @@ $(function() {
 		}
 		return arr;
 	}
+
+	// mapbox creation
+	function createMap(courseData) {
+		L.mapbox.accessToken = 'pk.eyJ1IjoibXJvY2t3YXkiLCJhIjoiY2locW1mMGo3MDRwcXVybHhhMXRrbXU1MyJ9.-5Z2oWSNPlsLGMP_5_mMog';
+		var map = L.mapbox.map('map', 'mapbox.emerald').setView([37.8, -96], 4);
+		var myLayer = L.mapbox.featureLayer().addTo(map);
+		var geojson = [];
+	  
+	  // add map points for each location returned from API
+	  for (i=0; i<courseData.length; i++) {
+		  var coursePoint = {
+		    "type": "Feature",
+		    "geometry": {
+		      "type": "Point",
+		      "coordinates": [courseData[i].longitude,courseData[i].latitude]
+		    },
+		    "properties": {
+		      'title': courseData[i].course_name,
+		      'icon': {
+		      	'iconUrl': 'basket.png',
+		      	'iconSize': [50,50],
+		      	'iconAnchor': [25,25],
+		      	'popupAnchor': [0,-25],
+		      	'className': 'dot'
+		      }
+		    }
+		  };	
+	  geojson.push(coursePoint); 
+	  }
+	  myLayer.on('layeradd', function(event) {
+	  	var marker = event.layer,
+	  			feature = marker.feature;
+	  	marker.setIcon(L.icon(feature.properties.icon));
+	  });
+		myLayer.setGeoJSON(geojson);
+		map.fitBounds(myLayer.getBounds());
+	}
+
+	// get window height and resize index background image
+	function courseListDivSize() {
+		var windowHeight = window.innerHeight;
+		var divHeight = windowHeight - 80;
+		$('.coursesDiv').css('height', divHeight);
+	}
+	
+	// change background size when window changes
+	$(window).resize( function() {
+		courseListDivSize();
+	});
+
+	courseListDivSize();
+
+
+
 });
 

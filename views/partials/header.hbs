@@ -2,7 +2,7 @@
 	<div class="menuBar font-effect-outline text-center container">
 		<a class="pull-left" href="/">Home</a>
 		{{#if user}}
-		<p class="text-center">Welcome {{user.username}}</p>
+		<p class="text-center">Welcome back {{user.username}}</p>
 		<a class="pull-right" href="/logout">Logout</a>
 		<a href="/profile">Profile</a>
 		{{else}}
@@ -13,6 +13,6 @@
 </nav>
 {{#if errorMessage}}
 <div class="errorMessage">
-	<div class="container">errormessage{{errorMessage}}</div>
+	<div class="container">{{errorMessage}}</div>
 </div>
 {{/if}}

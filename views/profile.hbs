@@ -7,6 +7,8 @@
 	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<!-- font -->
 	<link href='https://fonts.googleapis.com/css?family=Boogaloo&effect=outline' rel='stylesheet' type='text/css'>
+	<!-- mapbox css -->
+  <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' type="text/css"/>
 	<!-- custom css -->
 	<link type="text/css" rel="stylesheet" href="main.css">
 </head>
@@ -14,54 +16,67 @@
 	{{>header}}
 	<div class="container content">
 		<div class="row">
-			<div class="coursesDiv">
-				<script id="course-template" type="text/x-handlebars-template">
-				<div class="col-md-7">
-					{{>map}}
-					<h1 class="courseTitle text-center">Courses near \{{courses.[0].city}}, \{{courses.[0].state_province}}</h1>
-					<hr>
-					\{{#each courses}}
-					<div class="courseList course_\{{course_id}}" data-id="course_\{{course_id}}">
-						<p class="courseName">Course Name: \{{course_name}}</p>
-						<p class="courseLocation">Address: \{{street}} \{{city}} \{{state_province}}, \{{postal_code}}</p>
-						<button class="moreInfo">Course Details</button>
-						<div class="courseDetailsDiv" id="course_\{{course_id}}">
-							<p class="courseDescription">Description: \{{course_description}}</p>
-							<p class="courseFees">Fees: \{{fees}}</p>
-							<p class="courseHoles">Holes: \{{holes}}</p>
-							<p class="coursePrivate">Private: \{{private}}</p>
-							<p class="externalLink1Url"><a href="\{{external_link_1_url}}">Course Website</a></p>
-						</div>
-					</div>
-					<hr>
-					\{{/each}}
-				</div>	
-				</script>
-			</div>  {{!-- end of courses div --}}
-			<div class="eventsDiv col-md-5">
-					<script id="events-template" type="text/x-handlebars-template">
+			<div class="eventsDiv col-md-6">	
+				<div id="map"></div>
+				<script id="events-template" type="text/x-handlebars-template">
 					<div class="eventsHeadline">
-						<h1 class="eventsTitle">Events in \{{events.[0].state_province_name}}</h1>
+						<h1 class="eventsTitle font-effect-outline">Events in \{{events.[0].state_province_name}}</h1>
+					</div>
+					<div class="eventButtonDiv">
+						<button class="showEventsButton">Show Events</button>
 					</div>
 					\{{#each events}}
-					<div class="eventsList">
+					<div id="\{{tournament_id}}" class="eventsList">
 						<p class="tournament_name">Tournament Name: <a href="http://www.pdga.com/tour/event/\{{tournament_id}}"> \{{tournament_name}}</a></p>
 						<p class="eventLocation">Location: \{{city}}, \{{state_prov}}</p>
 						<p class="startDate">Event runs from: \{{start_date}} to \{{end_date}}</p>
+						<hr>
 					</div>
-					<hr>
 					\{{/each}}
 				</script>
-			</div> {{!-- end of events div --}}
-		</div> {{!-- end of main row --}}
-	</div>  {{!-- end container --}}
-	{{>footer}}
-
-
-
+			</div>
+			<div class="coursesDiv col-md-6">
+					<script id="course-template" type="text/x-handlebars-template">
+						<h1 class="courseTitle font-effect-outline text-center">Courses near \{{courses.[0].city}}, \{{courses.[0].state_province}}</h1>
+						<hr>
+						\{{#each courses}}
+						<div class="courseList course_\{{course_id}}" data-id="course_\{{course_id}}">
+							<p class="courseName">Course Name: \{{course_name}}</p>
+							<p class="courseLocation">Address: \{{street}} \{{city}} \{{state_province}}, \{{postal_code}}</p>
+							<button class="moreInfo">Course Details</button>
+							<div class="courseDetailsDiv" id="course_\{{course_id}}">
+								<p class="courseDescription">Description: \{{course_description}}</p>
+								<p class="courseFees">Fees: \{{fees}}</p>
+								<p class="courseHoles">Holes: \{{holes}}</p>
+								<p class="coursePrivate">Private: \{{private}}</p>
+								<p class="externalLink1Url"><a href="\{{external_link_1_url}}">Course Website</a></p>
+							</div>
+						</div>
+						<hr>
+						\{{/each}}
+					</script>
+			</div>  {{!-- end of courses div --}}
+		</div>  {{!-- end of row --}}
+	</div> {{!-- end of container --}}
+	<footer>
+		<div class="profileFooter text-center">
+			<div class="pdga font-effect-outline">
+				<a href="http://www.pdga.com/">Course and Event data ©{{currentYear}} PDGA</a>
+			</div>
+			<div class="contact font-effect-outline">
+				<p>Created by Michael Rockway</p>		
+			</div>	
+		</div>
+	</footer>
+	<!-- jquery  -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
+	<!-- jquery validate -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.14.0/jquery.validate.min.js"></script>
+	<!-- handlebars js -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+	<!-- mapbox js -->
+	<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+	<!-- custom js -->
 	<script type="text/javascript" src="profile.js"></script>
 </body>
 </html>
