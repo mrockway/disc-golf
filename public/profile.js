@@ -59,6 +59,7 @@ $(function() {
 		// Save Course state to pass as parameter in events search on page load
 		var courseState = ('courseState',courseData[0].state_province);
 		var stateName = ('stateName', courseData[0].state_province_name);
+
 		getEvents(courseState, stateName);
 	});
 
