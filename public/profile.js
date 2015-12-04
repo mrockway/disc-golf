@@ -110,40 +110,36 @@ $(function() {
 		L.mapbox.accessToken = 'pk.eyJ1IjoibXJvY2t3YXkiLCJhIjoiY2locW1mMGo3MDRwcXVybHhhMXRrbXU1MyJ9.-5Z2oWSNPlsLGMP_5_mMog';
 		var map = L.mapbox.map('map', 'mapbox.emerald').setView([37.8, -96], 4);
 		var myLayer = L.mapbox.featureLayer().addTo(map);
-		var geojson = [
-  {
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [-77.031952,38.913184]
-    },
-    "properties": {
-      "title": "Mapbox DC",
-      "description": "1714 14th St NW, Washington DC",
-      "marker-color": "#3ca0d3",
-      "marker-size": "large",
-      "marker-symbol": "rocket"
-    }
-  },
-  {
-    "type": "Feature",
-    "geometry": {
-      "type": "Point",
-      "coordinates": [-122.413682,37.775408]
-    },
-    "properties": {
-      "title": "Mapbox SF",
-      "description": "155 9th St, San Francisco",
-      "marker-color": "#63b6e5",
-      "marker-size": "large",
-      "marker-symbol": "rocket"
-    }
-  }
-];
-myLayer.setGeoJSON(geojson);
+		var geojson = [];
+	  for (i=0; i<courseData.length; i++) {
+		  var coursePoint = {
+		    "type": "Feature",
+		    "geometry": {
+		      "type": "Point",
+		      "coordinates": [courseData[i].longitude,courseData[i].latitude]
+		    },
+		    "properties": {
+		      'title': courseData[i].course_name,
+		      'icon': {
+		      	'iconUrl': 'basket.png',
+		      	'iconSize': [50,50],
+		      	'iconAnchor': [25,25],
+		      	'popupAnchor': [0,-25],
+		      	'className': 'dot'
+		      }
+		    }
+		  };	
+	  geojson.push(coursePoint); 
+	  }
+	  myLayer.on('layeradd', function(event) {
+	  	var marker = event.layer,
+	  			feature = marker.feature;
+	  	marker.setIcon(L.icon(feature.properties.icon));
+	  });
+		myLayer.setGeoJSON(geojson);
+		map.fitBounds(myLayer.getBounds());
 	}
 	
-
 	// end mapbox
 
 });
