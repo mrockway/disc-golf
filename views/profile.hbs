@@ -7,6 +7,8 @@
 	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<!-- font -->
 	<link href='https://fonts.googleapis.com/css?family=Boogaloo&effect=outline' rel='stylesheet' type='text/css'>
+	<!-- mapbox css -->
+  <link href='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.css' rel='stylesheet' type="text/css"/>
 	<!-- custom css -->
 	<link type="text/css" rel="stylesheet" href="main.css">
 </head>
@@ -15,9 +17,9 @@
 	<div class="container content">
 		<div class="row">
 			<div class="coursesDiv">
+				<div id='map' class="col-md-7"></div>
 				<script id="course-template" type="text/x-handlebars-template">
 				<div class="col-md-7">
-					{{>map}}
 					<h1 class="courseTitle text-center">Courses near \{{courses.[0].city}}, \{{courses.[0].state_province}}</h1>
 					<hr>
 					\{{#each courses}}
@@ -58,10 +60,13 @@
 	{{>footer}}
 
 
-
+	<!-- jquery  -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-
+	<!-- handlebars js -->
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+	<!-- mapbox js -->
+	<script src='https://api.mapbox.com/mapbox.js/v2.2.3/mapbox.js'></script>
+	<!-- custom js -->
 	<script type="text/javascript" src="profile.js"></script>
 </body>
 </html>

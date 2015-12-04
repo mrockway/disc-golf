@@ -58,8 +58,9 @@ body {
 	text-align: center;
 	width: 50%;
 }
-iframe {
-	margin-top: 10px;
+#map {
+	width: 100%;
+	height: 300px;
 }
 .courseList {
 	margin: 5px;
