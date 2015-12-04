@@ -1,5 +1,4 @@
 $(function() {
-	console.log('profile script');
 
 	var courseData;
 	var eventData;
@@ -71,18 +70,15 @@ $(function() {
 	function getEvents(stateAbb, stateName ) {
 		var eventQuery = stateAbb;
 		var eventStateName = stateName;
-		console.log(eventStateName);
 		$.get('/events', {state: eventQuery}, function(data) {
 			eventData = data.events;
 			formatDates(eventData);
 			eventData[0].state_province_name = eventStateName;
-			console.log(eventData[0].start_date);
 			eventHTML = eventsTemplate({
 				events: eventData
 			});
 			$('.eventsDiv').append(eventHTML);
 			$('.eventsList').hide();
-			console.log(eventData);
 		});
 	}
 
