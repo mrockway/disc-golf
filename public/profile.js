@@ -81,6 +81,7 @@ $(function() {
 				events: eventData
 			});
 			$('.eventsDiv').append(eventHTML);
+			$('.eventsList').hide();
 			console.log(eventData);
 		});
 	}
@@ -89,6 +90,12 @@ $(function() {
 	$('.coursesDiv').on('click', '.moreInfo', function(event) {
 		var courseId = $(this).closest('.courseList').attr('data-id');
 		$("#"+courseId).toggle();
+	});
+
+	//show events
+	$('.eventsDiv').on('click', '.showEventsButton', function(event) {
+		console.log('button clicked');
+		$('.eventsList').toggle();
 	});
 
 
@@ -111,6 +118,8 @@ $(function() {
 		var map = L.mapbox.map('map', 'mapbox.emerald').setView([37.8, -96], 4);
 		var myLayer = L.mapbox.featureLayer().addTo(map);
 		var geojson = [];
+	  
+	  // add map points for each location returned from API
 	  for (i=0; i<courseData.length; i++) {
 		  var coursePoint = {
 		    "type": "Feature",
@@ -139,8 +148,22 @@ $(function() {
 		myLayer.setGeoJSON(geojson);
 		map.fitBounds(myLayer.getBounds());
 	}
+
+	// get window height and resize index background image
+	function courseListDivSize() {
+		var windowHeight = window.innerHeight;
+		var divHeight = windowHeight - 80;
+		$('.coursesDiv').css('height', divHeight);
+	}
 	
-	// end mapbox
+	// change background size when window changes
+	$(window).resize( function() {
+		courseListDivSize();
+	});
+
+	courseListDivSize();
+
+
 
 });
 
