@@ -1,5 +1,4 @@
 $(function() {
-	console.log('fore');
 	
 	// get window height and resize index background image
 	function splashImageSize() {
