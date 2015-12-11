@@ -74,25 +74,25 @@ app.get('/', function(req, res) {
 
 //
 app.get("/checkzipcode", function (req, res) {
-	if (zipCodeNpm.lookup(req.query.zipcode)) {
+	if (zipCodeNpm.lookup(req.query.zipCode)) {
 		console.log("test");
-		res.redirect("/profile");
+		res.render('profile');
+	}
+	else {
+		console.log("fail");
 	}
 });
 
 //GET route for profile
 app.get('/profile', function(req, res) {
-	if (req.user) {
 		res.render('profile', {user : req.user , currentYear: currentYear});
-	} else {	
-		res.render('profile', {user : req.user , currentYear: currentYear});
-	}
 });
 
 // GET route for courses
 app.get('/courses', function(req, res) {
 	//get session id from db,  findOne...
 	var zipCode = req.query.zip;
+	console.log('zipcode course req',zipCode);
 	var newUrl = {
 		url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
 		type: "GET",

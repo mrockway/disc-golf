@@ -19,12 +19,12 @@ $(function() {
 	$("#searchZipForm").on("submit", function (event) {
 		event.preventDefault();
 		var zipCode = $("#postal_code").val();
-		localStorage.setItem("zipcode", zipCode);
-		$.get("/checkzipcode", {zipcode: zipCode},function (data) {
+		localStorage.setItem("zipCode", zipCode);
+		$.get("/checkzipcode", {zipCode: zipCode},function (data) {
 			if (!data) {
 				alert("wrong");
 			} else {
-				
+				window.location.replace('/profile');
 			}
 		});
 	});

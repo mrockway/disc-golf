@@ -15,7 +15,7 @@ $(function() {
 	// Save zipCode to local storage to be used on page
 	function saveZipCode() {
 		var zipCode = localStorage.getItem('zipCode');
-		if (zipCode.match(/\d/)) {
+		if (zipCode.match(/\d+/)) {
 			var checkZipCode = window.location.search.substring(1);
 			checkZipCode = checkZipCode.split('=')[1];
 			if(checkZipCode) {
@@ -35,8 +35,8 @@ $(function() {
 			}
 	}		
 
-	saveZipCode();
-
+	//saveZipCode();
+	console.log(localStorage.getItem('zipCode'));
 	// GET route for local courses
 	$.get('/courses', {
 		zip: localStorage.getItem('zipCode')
