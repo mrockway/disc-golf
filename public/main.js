@@ -15,4 +15,17 @@ $(function() {
 
 	splashImageSize();
 
+	//
+	$("#searchZipForm").on("submit", function (event) {
+		event.preventDefault();
+		var zipCode = $("#postal_code").val();
+		localStorage.setItem("zipcode", zipCode);
+		$.get("/checkzipcode", {zipcode: zipCode},function (data) {
+			if (!data) {
+				alert("wrong");
+			} else {
+				
+			}
+		});
+	});
 });

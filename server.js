@@ -9,6 +9,7 @@ var express = require('express'),
 	passport = require('passport'),
 	LocalStrategy = require('passport-local').Strategy,
 	flash = require('express-flash'),
+	zipCodeNpm = require("zipcode"),
 	// oauth = require('./oauth.js'),
 	dotenv = require('dotenv').load(),
 	app = express();
@@ -69,6 +70,14 @@ currentYear = currentYear.getFullYear();
 // GET route for homepage
 app.get('/', function(req, res) {
 	res.render('index', {user : req.user , currentYear: currentYear});
+});
+
+//
+app.get("/checkzipcode", function (req, res) {
+	if (zipCodeNpm.lookup(req.query.zipcode)) {
+		console.log("test");
+		res.redirect("/profile");
+	}
 });
 
 //GET route for profile
