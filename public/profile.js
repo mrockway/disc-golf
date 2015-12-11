@@ -51,19 +51,19 @@ $(function() {
 			courseHTML = courseTemplate({
 			courses: courseData
 			});
-		}
-
-		// draw map based on course results
-		createMap(courseData);
-
-		// Append course results to the page
-		$('.coursesDiv').append(courseHTML);
-		$('.courseDetailsDiv').hide();
 		
-		// Save Course state to pass as parameter in events search on page load
-		var courseState = ('courseState',courseData[0].state_province);
-		var stateName = ('stateName', courseData[0].state_province_name);
-		getEvents(courseState, stateName);
+			// draw map based on course results
+			createMap(courseData);
+
+			// Append course results to the page
+			$('.coursesDiv').append(courseHTML);
+			$('.courseDetailsDiv').hide();
+			
+			// Save Course state to pass as parameter in events search on page load
+			var courseState = ('courseState',courseData[0].state_province);
+			var stateName = ('stateName', courseData[0].state_province_name);
+			getEvents(courseState, stateName);
+		}
 	});
 
 	//GET route for local events

@@ -82,16 +82,18 @@ app.get('/profile', function(req, res) {
 
 // GET route for courses
 app.get('/courses', function(req, res) {
+	//get session id from db,  findOne...
 	var zipCode = req.query.zip;
 	var newUrl = {
 		url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
 		type: "GET",
 		headers: {
-			'Cookie': process.env.pdgaCookie
+			'Cookie': process.env.pdgaCookie // + add found sessionid 
 		},
 	};
 	request(newUrl, function(err, courseRes, courseBody) {
 		var courseList = JSON.parse(courseBody);
+		//if error 403 call login API, save sessionid to db, then do the courses call again
 		res.json(courseList);
 	});
 });
@@ -99,14 +101,16 @@ app.get('/courses', function(req, res) {
 
 //  GET route for events
 app.get('/events', function(req, res) {
+	//get session id from db, findone...
 	var newUrl = {
 		url: 'https://api.pdga.com/services/json/event?state=' + req.query.state,
 		headers: {
-			'Cookie': process.env.pdgaCookie
+			'Cookie': process.env.pdgaCookie // + add found sessionid 
 		}
 	};
 	request(newUrl, function(err, eventRes, eventBody) {
 		var eventList = JSON.parse(eventBody);
+		//if error 403 call login API, save sessionid to db, then do the courses call again
 		res.json(eventList);
 	});
 });
