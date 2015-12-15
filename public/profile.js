@@ -96,7 +96,7 @@ $(function() {
 		      "coordinates": [courseData[i].longitude,courseData[i].latitude]
 		    },
 		    "properties": {
-		      'title': '<a href="https://www.pdga.com/node/'+courseData[i].course_node_nid+'">'+courseData[i].course_name+'</a>',
+		      'title': '<a target="_blank" href="https://www.pdga.com/node/'+courseData[i].course_node_nid+'">'+courseData[i].course_name+'</a>',
 		      'url': "https://www.pdga.com/node/"+courseData[i].course_node_nid,
 		      'icon': {
 		      	'iconUrl': 'basket.png',
