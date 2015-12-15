@@ -1,54 +1,26 @@
 $(function() {
 
-	var courseData;
-	var eventData;
 	var courseSource = $('#course-template').html();
 	var courseTemplate = Handlebars.compile(courseSource);
-	var courseHTML = courseTemplate({ courses: courseData	});
 	var eventSource = $('#events-template').html();
 	var eventsTemplate = Handlebars.compile(eventSource);
-	var eventHTML = eventsTemplate({ events: eventData });
 
 	var year = new Date();
 	year = year.getFullYear();
 
-	// Save zipCode to local storage to be used on page
-	function saveZipCode() {
-		var zipCode = localStorage.getItem('zipCode');
-		if (zipCode.match(/\d+/)) {
-			var checkZipCode = window.location.search.substring(1);
-			checkZipCode = checkZipCode.split('=')[1];
-			if(checkZipCode) {
-				var zipCodeUrl = (window.location.search.substring(1));
-				zipCode = zipCodeUrl.split("=")[1];
-				localStorage.setItem('zipCode', zipCode);
-				return;
-			} else {
-				zipCode = localStorage.getItem('zipCode');
-				localStorage.setItem('zipCode', zipCode);
-				return;
-			}	
-		} else {
-				var newZipCodeUrl = (window.location.search.substring(1));
-				zipCode = newZipCodeUrl.split("=")[1];
-				localStorage.setItem('zipCode', zipCode);
-			}
-	}		
-
-	//saveZipCode();
 	console.log(localStorage.getItem('zipCode'));
 	// GET route for local courses
 	$.get('/courses', {
 		zip: localStorage.getItem('zipCode')
 	}, function(data) {
-		courseData = data.courses;
+		var courseData = data.courses;
 		console.log(courseData);
 		// Check to see if zipCode comes back with results
 		if (!courseData) {
-			alert('Please enter a valid zipCode');
-			window.location.replace('/');
+			alert('No Courses Found. Please enter another zip code');
+			//window.location.replace('/');
 		} else {	
-			courseHTML = courseTemplate({
+			var courseHTML = courseTemplate({
 			courses: courseData
 			});
 		
@@ -71,10 +43,10 @@ $(function() {
 		var eventQuery = stateAbb;
 		var eventStateName = stateName;
 		$.get('/events', {state: eventQuery}, function(data) {
-			eventData = data.events;
+			var eventData = data.events;
 			formatDates(eventData);
 			eventData[0].state_province_name = eventStateName;
-			eventHTML = eventsTemplate({
+			var eventHTML = eventsTemplate({
 				events: eventData
 			});
 			$('.eventsDiv').append(eventHTML);
@@ -124,7 +96,8 @@ $(function() {
 		      "coordinates": [courseData[i].longitude,courseData[i].latitude]
 		    },
 		    "properties": {
-		      'title': courseData[i].course_name,
+		      'title': '<a href="https://www.pdga.com/node/'+courseData[i].course_node_nid+'">'+courseData[i].course_name+'</a>',
+		      'url': "https://www.pdga.com/node/"+courseData[i].course_node_nid,
 		      'icon': {
 		      	'iconUrl': 'basket.png',
 		      	'iconSize': [50,50],
@@ -139,6 +112,7 @@ $(function() {
 	  myLayer.on('layeradd', function(event) {
 	  	var marker = event.layer,
 	  			feature = marker.feature;
+
 	  	marker.setIcon(L.icon(feature.properties.icon));
 	  });
 		myLayer.setGeoJSON(geojson);

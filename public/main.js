@@ -21,8 +21,9 @@ $(function() {
 		var zipCode = $("#postal_code").val();
 		localStorage.setItem("zipCode", zipCode);
 		$.get("/checkzipcode", {zipCode: zipCode},function (data) {
-			if (!data) {
-				alert("wrong");
+			if (data === "invalid zipcode") {
+				alert("Please enter a valid zipcode");
+				return;
 			} else {
 				window.location.replace('/profile');
 			}

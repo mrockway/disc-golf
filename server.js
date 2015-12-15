@@ -80,6 +80,7 @@ app.get("/checkzipcode", function (req, res) {
 	}
 	else {
 		console.log("fail");
+		res.send("invalid zipcode");
 	}
 });
 
@@ -92,7 +93,6 @@ app.get('/profile', function(req, res) {
 app.get('/courses', function(req, res) {
 	//get session id from db,  findOne...
 	var zipCode = req.query.zip;
-	console.log('zipcode course req',zipCode);
 	var newUrl = {
 		url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
 		type: "GET",
