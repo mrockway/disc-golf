@@ -10,7 +10,6 @@ var express = require('express'),
 	LocalStrategy = require('passport-local').Strategy,
 	flash = require('express-flash'),
 	zipCodeNpm = require("zipcode"),
-	// oauth = require('./oauth.js'),
 	dotenv = require('dotenv').load(),
 	app = express();
 
@@ -18,6 +17,7 @@ var express = require('express'),
 //Require models
 var User = require('./models/user');
 var Course = require('./models/course');
+var Session = require('./models/session');
 
 // set express view engine
 app.set('view engine', 'hbs');
@@ -62,6 +62,16 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// sessionId to send with api calls to pdga
+// function to get session id from db
+var sessionId;
+
+function findSessionID() {
+	var sessionData = Session.find({}, function(err, data) {
+			sessionId = data[0].pdgaSessionID;
+		});	
+}
+
 
 //get year for copyright footer
 var currentYear = new Date();
@@ -69,17 +79,16 @@ currentYear = currentYear.getFullYear();
 
 // GET route for homepage
 app.get('/', function(req, res) {
+	findSessionID();
 	res.render('index', {user : req.user , currentYear: currentYear});
 });
 
 //
 app.get("/checkzipcode", function (req, res) {
 	if (zipCodeNpm.lookup(req.query.zipCode)) {
-		console.log("test");
 		res.render('profile');
 	}
 	else {
-		console.log("fail");
 		res.send("invalid zipcode");
 	}
 });
@@ -97,13 +106,17 @@ app.get('/courses', function(req, res) {
 		url: 'https://api.pdga.com/services/json/course?postal_code=' + zipCode,
 		type: "GET",
 		headers: {
-			'Cookie': process.env.pdgaCookie // + add found sessionid 
-		},
+			'Cookie': process.env.pdgaCookie + sessionId 
+		}
 	};
 	request(newUrl, function(err, courseRes, courseBody) {
-		var courseList = JSON.parse(courseBody);
-		//if error 403 call login API, save sessionid to db, then do the courses call again
-		res.json(courseList);
+		if (courseRes.statusCode === 403 ) {
+			pdgaLogin();
+			//console.log('courseRes',courseRes);
+		} else {
+			var courseList = JSON.parse(courseBody);
+			res.json(courseList);
+		}
 	});
 });
 
@@ -114,7 +127,7 @@ app.get('/events', function(req, res) {
 	var newUrl = {
 		url: 'https://api.pdga.com/services/json/event?state=' + req.query.state,
 		headers: {
-			'Cookie': process.env.pdgaCookie // + add found sessionid 
+			'Cookie': process.env.pdgaCookie + sessionId
 		}
 	};
 	request(newUrl, function(err, eventRes, eventBody) {
@@ -176,7 +189,101 @@ app.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
+// Login function for PDGA API session
+function pdgaLogin(){
+	var pdgaLoginCall = {
+		url: 'https://api.pdga.com/services/json/user/login',
+		headers: { 'Content-type': 'application/json' },
+		json: { 'username':'mrockway','password':process.env.pdgaPassword },
+	};
+	request.post(pdgaLoginCall, function(err, loginRes, loginBody) {
+		console.log('loginBody',loginBody.sessid);
+		Session.remove().exec();
+		var session =  Session.create(
+			{ pdgaSessionID: loginBody.sessid,
+				sessionName: 'loginSession' },
+			function(err, success){
+				if (err) {
+				console.log('err',err);
+			} else {
+				console.log(success);
+			}
+			});
+	});
+}
+
 //  server location
 app.listen(process.env.PORT || 3000, function() {
 	console.log('server is working');
 });
+
+// Expected Response from PDGA Login
+// {
+//     "sessid": "5_SzWjfsgaN5iPC9ex9ghsy_qGjWhXxl_ogsokECQb0",
+//     "session_name": "SSESSf1f85588bb869a1781d21eec9fef1bff",
+//     "token": "rkh82YbrnPbkWxq-1eqItuzvjYqWUTzl3NjpWdEoRrw",
+//     "user": {
+//         "uid": "287596",
+//         "name": "mrockway",
+//         "mail": "mrockway@gmail.com",
+//         "theme": "",
+//         "signature": "",
+//         "signature_format": "plain_text",
+//         "created": "1448386940",
+//         "access": "1455008832",
+//         "login": 1455142797,
+//         "status": "1",
+//         "timezone": null,
+//         "language": "",
+//         "picture": null,
+//         "data": {
+//             "geoip_location_original": {
+//                 "country": "United States",
+//                 "country_code": "US",
+//                 "city": "El Cerrito",
+//                 "zip": "94530",
+//                 "region_code": "CA",
+//                 "region": "California",
+//                 "latitude": 37.918,
+//                 "longitude": -122.3032,
+//                 "time_zone": "",
+//                 "ip_address": "38.140.30.202",
+//                 "timestamp": 1448386940
+//             },
+//             "ckeditor_default": "t",
+//             "ckeditor_show_toggle": "t",
+//             "ckeditor_width": "100%",
+//             "ckeditor_lang": "en",
+//             "ckeditor_auto_lang": "t",
+//             "htmlmail_plaintext": 0
+//         },
+//         "uuid": "61feb581-ca91-49b6-b179-f0e0fc03e060",
+//         "roles": {
+//             "2": "authenticated user",
+//             "8": "authorized developer"
+//         },
+//         "field_member_reference": [],
+//         "rdf_mapping": {
+//             "rdftype": [
+//                 "sioc:UserAccount"
+//             ],
+//             "name": {
+//                 "predicates": [
+//                     "foaf:name"
+//                 ]
+//             },
+//             "homepage": {
+//                 "predicates": [
+//                     "foaf:page"
+//                 ],
+//                 "type": "rel"
+//             }
+//         },
+//         "comment_notify_settings": {
+//             "uid": "287596",
+//             "node_notify": "1",
+//             "comment_notify": "1"
+//         },
+//         "twitter_accounts": []
+//     }
+// }
