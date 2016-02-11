@@ -68,7 +68,11 @@ var sessionId;
 
 function findSessionID() {
 	var sessionData = Session.find({}, function(err, data) {
-			sessionId = data[0].pdgaSessionID;
+			if (data.length === 0) {
+				return;
+			} else {
+				sessionId = data[0].pdgaSessionID;
+			}
 		});	
 }
 
