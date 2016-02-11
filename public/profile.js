@@ -13,6 +13,7 @@ $(function() {
 	$.get('/courses', {
 		zip: localStorage.getItem('zipCode')
 	}, function(data) {
+		console.log(data);
 		var courseData = data.courses;
 		console.log(courseData);
 		// Check to see if zipCode comes back with results
