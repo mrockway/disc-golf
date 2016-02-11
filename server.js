@@ -102,6 +102,10 @@ app.get('/profile', function(req, res) {
 		res.render('profile', {user : req.user , currentYear: currentYear});
 });
 
+app.get('/pdgaLogin', function(req,res) {
+	pdgaLogin();
+});
+
 // GET route for courses
 app.get('/courses', function(req, res) {
 	//get session id from db,  findOne...
@@ -115,8 +119,7 @@ app.get('/courses', function(req, res) {
 	};
 	request(newUrl, function(err, courseRes, courseBody) {
 		if (courseRes.statusCode === 403 ) {
-			pdgaLogin();
-			res.json({error: "Cannot display at this time.  Please try again."});
+			res.redirect('/profile');
 		} else {
 			var courseList = JSON.parse(courseBody);
 			res.json(courseList);

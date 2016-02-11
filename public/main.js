@@ -15,6 +15,10 @@ $(function() {
 
 	splashImageSize();
 
+	$.get('/pdgaLogin', function(data) {
+		return;
+	});
+
 	//
 	$("#searchZipForm").on("submit", function (event) {
 		event.preventDefault();

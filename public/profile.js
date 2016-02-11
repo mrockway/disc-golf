@@ -8,14 +8,11 @@ $(function() {
 	var year = new Date();
 	year = year.getFullYear();
 
-	console.log(localStorage.getItem('zipCode'));
 	// GET route for local courses
 	$.get('/courses', {
 		zip: localStorage.getItem('zipCode')
 	}, function(data) {
-		console.log(data);
 		var courseData = data.courses;
-		console.log(courseData);
 		// Check to see if zipCode comes back with results
 		if (!courseData) {
 			alert('No Courses Found. Please enter another zip code');
@@ -63,7 +60,6 @@ $(function() {
 
 	//show events
 	$('.eventsDiv').on('click', '.showEventsButton', function(event) {
-		console.log('button clicked');
 		$('.eventsList').toggle();
 	});
 
