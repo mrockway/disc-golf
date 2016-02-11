@@ -69,7 +69,7 @@ var sessionId;
 function findSessionID() {
 	var sessionData = Session.find({}, function(err, data) {
 			if (data.length === 0) {
-				return;
+				pdgaLogin();
 			} else {
 				sessionId = data[0].pdgaSessionID;
 			}
@@ -116,7 +116,6 @@ app.get('/courses', function(req, res) {
 	request(newUrl, function(err, courseRes, courseBody) {
 		if (courseRes.statusCode === 403 ) {
 			pdgaLogin();
-			//console.log('courseRes',courseRes);
 		} else {
 			var courseList = JSON.parse(courseBody);
 			res.json(courseList);
@@ -136,7 +135,6 @@ app.get('/events', function(req, res) {
 	};
 	request(newUrl, function(err, eventRes, eventBody) {
 		var eventList = JSON.parse(eventBody);
-		//if error 403 call login API, save sessionid to db, then do the courses call again
 		res.json(eventList);
 	});
 });
