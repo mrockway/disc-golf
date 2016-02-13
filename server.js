@@ -202,6 +202,7 @@ function pdgaLogin() {
 	};
 	request.post(pdgaLoginCall, function(err, loginRes, loginBody) {
 		console.log('loginBody',loginBody.sessid);
+		console.log('loginres',loginRes);
 		Session.remove().exec();
 		var session =  Session.create(
 			{ pdgaSessionID: loginBody.sessid,
@@ -212,6 +213,7 @@ function pdgaLogin() {
 			} else {
 				console.log(success);
 			}
+			findSessionID();
 			});
 	});
 }
