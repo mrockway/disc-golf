@@ -84,6 +84,7 @@ currentYear = currentYear.getFullYear();
 // GET route for homepage
 app.get('/', function(req, res) {
 	findSessionID();
+	console.log('sessionId', sessionId);
 	res.render('index', {user : req.user , currentYear: currentYear});
 });
 
