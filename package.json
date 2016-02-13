@@ -7,6 +7,9 @@
     "test": "mocha",
     "start": "node server.js"
   },
+  "engines": {
+    "node": "4.2.1"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mrockway/disc-golf.git"

@@ -102,10 +102,6 @@ app.get('/profile', function(req, res) {
 		res.render('profile', {user : req.user , currentYear: currentYear});
 });
 
-app.get('/pdgaLogin', function(req,res) {
-	pdgaLogin();
-});
-
 // GET route for courses
 app.get('/courses', function(req, res) {
 	//get session id from db,  findOne...
@@ -119,14 +115,13 @@ app.get('/courses', function(req, res) {
 	};
 	request(newUrl, function(err, courseRes, courseBody) {
 		if (courseRes.statusCode === 403 ) {
-			res.redirect('/profile');
+			pdgaLogin();
 		} else {
 			var courseList = JSON.parse(courseBody);
 			res.json(courseList);
 		}
 	});
 });
-
 
 //  GET route for events
 app.get('/events', function(req, res) {
@@ -196,7 +191,7 @@ app.get('/logout', function(req, res) {
 });
 
 // Login function for PDGA API session
-function pdgaLogin(){
+function pdgaLogin() {
 	var pdgaLoginCall = {
 		url: 'https://api.pdga.com/services/json/user/login',
 		headers: { 'Content-type': 'application/json' },
@@ -221,4 +216,4 @@ function pdgaLogin(){
 //  server location
 app.listen(process.env.PORT || 3000, function() {
 	console.log('server is working');
-});
+});	
