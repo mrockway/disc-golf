@@ -99,6 +99,9 @@ app.get("/checkzipcode", function (req, res) {
 
 //GET route for profile
 app.get('/profile', function(req, res) {
+	while (sessionId === null) {
+		res.json("Gathering results");
+	}
 		res.render('profile', {user : req.user , currentYear: currentYear});
 });
 
