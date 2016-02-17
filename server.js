@@ -119,7 +119,10 @@ app.get('/courses', function(req, res) {
 	};
 	request(newUrl, function(err, courseRes, courseBody) {
 		if (courseRes.statusCode === 403 ) {
-			pdgaLogin();
+			pdgaLogin().done(request(newUrl, function(err, courseRes, courseBody){
+				var courseList = JSON.parse(courseBody);
+				res.json(courseList);
+			}));
 		} else {
 			var courseList = JSON.parse(courseBody);
 			res.json(courseList);
