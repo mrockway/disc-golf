@@ -59,7 +59,7 @@ body {
 	margin-top: 20px;
 }
 .coursesDiv {
-	overflow: scroll;
+	overflow: auto;
 }
 .courseList {
 	margin: 5px;
