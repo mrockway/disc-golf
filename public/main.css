@@ -27,6 +27,11 @@ body {
 	font-size: 20px;
 	padding-right: 5px;
 }
+
+.userLink {
+	padding: 0 1em; 
+}
+
 .splashPage {
 	background-color: ##EFD8B5;
 	background-image: url('jumbotronbackground.png');
