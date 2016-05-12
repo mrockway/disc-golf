@@ -5,9 +5,6 @@ $(function() {
 	var eventSource = $('#events-template').html();
 	var eventsTemplate = Handlebars.compile(eventSource);
 
-	var year = new Date();
-	year = year.getFullYear();
-
 	// GET route for local courses
 	$.get('/courses', {
 		zip: localStorage.getItem('zipCode')
@@ -16,7 +13,7 @@ $(function() {
 		// Check to see if zipCode comes back with results
 		if (!courseData) {
 			alert('No Courses Found. Please enter another zip code');
-			//window.location.replace('/');
+
 		} else {	
 			var courseHTML = courseTemplate({
 			courses: courseData

@@ -66,6 +66,8 @@ passport.deserializeUser(User.deserializeUser());
 // function to get session id from db
 var sessionId;
 
+pdgaLogin();
+
 function findSessionID() {
 	var sessionData = Session.find({}, function(err, data) {
 			if (data.length === 0) {
@@ -78,13 +80,12 @@ function findSessionID() {
 
 
 //get year for copyright footer
-var currentYear = new Date();
-currentYear = currentYear.getFullYear();
+var currentYear = new Date().getFullYear();
+
 
 // GET route for homepage
 app.get('/', function(req, res) {
-	findSessionID();
-	console.log('sessionId', sessionId);
+
 	res.render('index', {user : req.user , currentYear: currentYear});
 });
 
@@ -119,7 +120,7 @@ app.get('/courses', function(req, res) {
 	};
 	request(newUrl, function(err, courseRes, courseBody) {
 		if (courseRes.statusCode === 403 ) {
-			pdgaLogin().done(request(newUrl, function(err, courseRes, courseBody){
+			pdgaLogin().then(request(newUrl, function(err, courseRes, courseBody){
 				var courseList = JSON.parse(courseBody);
 				res.json(courseList);
 			}));
@@ -205,8 +206,6 @@ function pdgaLogin() {
 		json: { 'username':'mrockway','password':process.env.pdgaPassword },
 	};
 	request.post(pdgaLoginCall, function(err, loginRes, loginBody) {
-		console.log('loginBody',loginBody.sessid);
-		console.log('loginres',loginRes);
 		Session.remove().exec();
 		var session =  Session.create(
 			{ pdgaSessionID: loginBody.sessid,
